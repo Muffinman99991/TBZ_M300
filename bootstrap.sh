@@ -1,7 +1,7 @@
 #!/bin/bash
 ##################################
 #Autor: Marvin Haimoff  	 #
-#Datum: März 2019                #
+#Datum: Maerz 2019               #
 #Im Rahmen des Modul 300 der TBZ #
 ##################################
 
@@ -9,10 +9,10 @@
 
 
 ##################VORBEREITUNGEN & INSTALLIEREN VON PAKETEN#####################
-#Wecheln zum Root User. Somit werden alle der folgenden Befehle als root ausgeführt
+#Wecheln zum Root User. Somit werden alle der folgenden Befehle als root ausgefÃ¼hrt
 sudo su
 
-#Root Passwort setzen und SSH-Login als Root erlauben. Ohne diesen Schritt ist es zu einem späteren Zeitpunkt nicht möglich,
+#Root Passwort setzen und SSH-Login als Root erlauben. Ohne diesen Schritt ist es zu einem spÃ¤teren Zeitpunkt nicht mÃ¶glich,
 #per scp die Certificate vom Server herunterzuladen
 echo "root:Miau123"|chpasswd
 sed -i s/without-password/yes/g /etc/ssh/sshd_config
@@ -46,11 +46,11 @@ sudo -E ./build-ca --batch
 sudo -E ./build-key-server --batch server
 sudo -E ./build-key --batch client
 
-#Das Erstellen des Diffie-Hellman Schlüssels dauert ein wenig länger
+#Das Erstellen des Diffie-Hellman SchlÃ¼ssels dauert ein wenig lÃ¤nger
 sudo -E ./build-dh
 
-#Alle sobene erstellten Zertifikate und deren Schlüssel, werden in den Ordner /etc/openvpn/ kopiert. Somit muss das OpenVPN
-#Config File nicht mehr angepasst werden und die Zertifikate können anschliessend alle von diesem Ordner zum Client kopiert werden
+#Alle sobene erstellten Zertifikate und deren SchlÃ¼ssel, werden in den Ordner /etc/openvpn/ kopiert. Somit muss das OpenVPN
+#Config File nicht mehr angepasst werden und die Zertifikate kÃ¶nnen anschliessend alle von diesem Ordner zum Client kopiert werden
 cp /etc/openvpn/easy-rsa2/keys/ca.crt /etc/openvpn/
 cp /etc/openvpn/easy-rsa2/keys/server.crt /etc/openvpn/
 cp /etc/openvpn/easy-rsa2/keys/server.key /etc/openvpn/
@@ -71,7 +71,7 @@ sed -i '253 i\auth SHA256' /etc/openvpn/server.conf
 sed -i s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g /etc/sysctl.conf
 
 #UFW Firewall Regeln, welche geladen werden noch bevor die konventionell Regeln geladen werden. Diese Regeln sind notwendig,
-#da der Adapter bzw. die Schnittstelle zwischen Host und der VM auf NAT gestellt ist (eth1 durch gewünschte Schnittstelle ersetzen).
+#da der Adapter bzw. die Schnittstelle zwischen Host und der VM auf NAT gestellt ist (eth1 durch gewÃ¼nschte Schnittstelle ersetzen).
 sed -i '10 i\*nat' /etc/ufw/before.rules
 sed -i '11 i\:POSTROUTING ACCEPT [0:0]' /etc/ufw/before.rules
 sed -i '12 i\-A POSTROUTING -s 10.8.0.0/8 -o eth1 -j MASQUERADE' /etc/ufw/before.rules
@@ -87,7 +87,7 @@ ufw allow OpenSSH
 ufw disable
 ufw --force enable
 
-#IP-Tables für VPN Tunnel definieren. Ohne diesen Schritt kann später nicht per 10.8.0.1 auf den Webserver zugegriffen werden
+#IP-Tables fÃ¼r VPN Tunnel definieren. Ohne diesen Schritt kann spÃ¤ter nicht per 10.8.0.1 auf den Webserver zugegriffen werden
 iptables -A INPUT -i tun+ -j ACCEPT
 iptables -A FORWARD -i tun+ -j ACCEPT
 
