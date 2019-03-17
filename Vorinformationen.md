@@ -1,8 +1,8 @@
-TBZ M300 LB1
+TBZ M300 LB1 (Vorinformationen)
 ===============
 
-In den folgenden Zeilen wurde dokumentiert, wie mit **Vagrant** eine virtuelle Maschiene erstellt wurde, welche einen **OpenVPN Server**
-und zugleich einen **Apache Webserver** beherbergt (alles automatisiert). Auf den Apache Webserver kann nur dann zugegriffen werden, wenn man sich im VPN befindet.
+Folgend ein paar Vorinformationen zur LB1 des Modules 300. 
+Das Ziel dabei war, einen Apache Webserver und einen OpenVPN Server auf ein und derselben virtuelle Maschiene inbetrieb zu nehmen, und diese Umgebung so zu konfigurieren, dass auf den Webserver nur vom VPN zugegriffen werden kann (von externen Netzen abgeschottet).
 
 
 Was ist Vagrant?
@@ -24,18 +24,28 @@ Was ist Apache?
 
 Apache ist ein Opensource Webservice, welcher simple zu konfigurieren ist (meist reicht das installieren des Services und das austauschen des index.html Files schon) 
 
-Numbered List
+
+Persönlicher Wissenstand
 -------------
 
-1. Foo
-2. Bar
+### Virtualisierung
+sdsadfsfsdfd
 
-Formatting
-----------
+### Linux (Ubuntu)
+sdfsdf
 
-Can be **bold** or *italic*
+### Vagrant
+dsfsdf
 
-Links
------
+### Git
+dfsdfdsfsd
 
-Click [here](http://foo.com) to go somewhere.
+### OpenVPN
+sdfsdfsdfsdf
+
+### Apache
+sdfsdfsdf
+
+### Git
+sdfsdfsdfds
+
