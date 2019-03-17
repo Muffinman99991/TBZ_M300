@@ -12,8 +12,9 @@
 #Wecheln zum Root User. Somit werden alle der folgenden Befehle als root ausgefuehrt
 sudo su
 
-#Root Passwort setzen und SSH-Login als Root erlauben. Ohne diesen Schritt ist es zu einem spaeteren Zeitpunkt nicht moeglich,
-#per scp die Certificate vom Server herunterzuladen
+
+#Root Passwort setzen (Passwort Miau123 sollte durch ein sicheres Passwort ersetzt werden!) und SSH-Login als Root erlauben. 
+#Ohne diesen Schritt ist es zu einem spaeteren Zeitpunkt nicht moeglich, per scp die Zertifikate vom Server herunterzuladen.
 echo "root:Miau123"|chpasswd
 sed -i s/without-password/yes/g /etc/ssh/sshd_config
 service ssh reload
