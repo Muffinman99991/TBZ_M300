@@ -9,10 +9,10 @@
 
 
 ##################VORBEREITUNGEN & INSTALLIEREN VON PAKETEN#####################
-#Wecheln zum Root User. Somit werden alle der folgenden Befehle als root ausgeführt
+#Wecheln zum Root User. Somit werden alle der folgenden Befehle als root ausgefuehrt
 sudo su
 
-#Root Passwort setzen und SSH-Login als Root erlauben. Ohne diesen Schritt ist es zu einem späteren Zeitpunkt nicht möglich,
+#Root Passwort setzen und SSH-Login als Root erlauben. Ohne diesen Schritt ist es zu einem spaeteren Zeitpunkt nicht moeglich,
 #per scp die Certificate vom Server herunterzuladen
 echo "root:Miau123"|chpasswd
 sed -i s/without-password/yes/g /etc/ssh/sshd_config
@@ -46,11 +46,11 @@ sudo -E ./build-ca --batch
 sudo -E ./build-key-server --batch server
 sudo -E ./build-key --batch client
 
-#Das Erstellen des Diffie-Hellman Schlüssels dauert ein wenig länger
+#Das Erstellen des Diffie-Hellman Schluessels dauert ein wenig laenger
 sudo -E ./build-dh
 
-#Alle sobene erstellten Zertifikate und deren Schlüssel, werden in den Ordner /etc/openvpn/ kopiert. Somit muss das OpenVPN
-#Config File nicht mehr angepasst werden und die Zertifikate können anschliessend alle von diesem Ordner zum Client kopiert werden
+#Alle sobene erstellten Zertifikate und deren Schluessel, werden in den Ordner /etc/openvpn/ kopiert. Somit muss das OpenVPN
+#Config File nicht mehr angepasst werden und die Zertifikate koennen anschliessend alle von diesem Ordner zum Client kopiert werden
 cp /etc/openvpn/easy-rsa2/keys/ca.crt /etc/openvpn/
 cp /etc/openvpn/easy-rsa2/keys/server.crt /etc/openvpn/
 cp /etc/openvpn/easy-rsa2/keys/server.key /etc/openvpn/
@@ -71,7 +71,7 @@ sed -i '253 i\auth SHA256' /etc/openvpn/server.conf
 sed -i s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g /etc/sysctl.conf
 
 #UFW Firewall Regeln, welche geladen werden noch bevor die konventionell Regeln geladen werden. Diese Regeln sind notwendig,
-#da der Adapter bzw. die Schnittstelle zwischen Host und der VM auf NAT gestellt ist (eth1 durch gewünschte Schnittstelle ersetzen).
+#da der Adapter bzw. die Schnittstelle zwischen Host und der VM auf NAT gestellt ist (eth1 durch gewuenschte Schnittstelle ersetzen).
 sed -i '10 i\*nat' /etc/ufw/before.rules
 sed -i '11 i\:POSTROUTING ACCEPT [0:0]' /etc/ufw/before.rules
 sed -i '12 i\-A POSTROUTING -s 10.8.0.0/8 -o eth1 -j MASQUERADE' /etc/ufw/before.rules
@@ -87,7 +87,7 @@ ufw allow OpenSSH
 ufw disable
 ufw --force enable
 
-#IP-Tables für VPN Tunnel definieren. Ohne diesen Schritt kann später nicht per 10.8.0.1 auf den Webserver zugegriffen werden
+#IP-Tables fuer VPN Tunnel definieren. Ohne diesen Schritt kann spaeter nicht per 10.8.0.1 auf den Webserver zugegriffen werden
 iptables -A INPUT -i tun+ -j ACCEPT
 iptables -A FORWARD -i tun+ -j ACCEPT
 
@@ -108,17 +108,4 @@ systemctl start openvpn@server
 
 
 
-
-
-
-1.     https://community.openvpn.net/openvpn/wiki/255-qconnection-initiated-with-xxxxq-but-i-cannot-ping-the-server-through-the-vpn
-
-2.     https://www.digitalocean.com/community/tutorials/how-to-set-up-an-openvpn-server-on-ubuntu-18-04
-
-3.     https://askubuntu.com/questions/117155/do-i-need-to-restore-iptable-rules-everytime-on-boot
-
-###########################################################
-lsb_release -a
-do-release-upgrade
-
-
+#Viel Spass :D
