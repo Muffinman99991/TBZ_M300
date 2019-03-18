@@ -28,26 +28,54 @@ Die Linie sollte dementsprechend wie folgt aussehen:
 ```
 config.vm.box = "generic/ubuntu1804"
 ```
+&#160;
 
 Da unsere VM direkt vom LAN erreichbar sein sollte (Bridged), muss die folgende Linie auskommentiert werden:
 
 ```
 #config.vm.network "public_network"
 ```
+&#160;
 
 Zusätzlich kann dann noch eine statishce IP, sowie das gebdridge Interface ausgewählt werden:
 
 ```
 config.vm.network "public_network", ip: "10.71.13.4", bridge: "en1: ASXI Adapter"
 ```
+&#160;
 
 Da all unsere Befehle in einer separten Bash Skript geschrieben werden, muss dieses im Vagrant File definiert werden. Dieses Skript wird dann per SSH ins Guest System hochgeladen und ausgeführt.
 
 ```
 config.vm.provision "shell", path: "bootstrap.sh"
 ```
+&#160;
 
 ## Bash Skript erstellen
 In das Bash skript werden alle Befehle reingeschrieben, welche auf der VM ausgeführt werden. Wichtig dabei ist, dass jeder Befehl ohne Aufforderung einer Eingabe ausgeführt wird. Während Vagrant die VM bereitstellt, können keine Eingaben getätigt werden.
 
 Damit die VM weis, um welche Sprache es sich bei dem Skript handelt, muss in der ersten Linie des Skripts `#!/bin/bash` stehen. Gefolgt von `sudo su`, denn so muss nicht vor jedem Befehl manuell als SuperUser (`sudo`) ausgeführt werden.
+
+
+
+## VM erstellen
+
+
+
+
+## OpenVPN Client installieren
+
+
+
+## Zertifikate vom Server herunterladen
+
+
+
+## Mit VPN verbinden
+
+
+
+## Testing / Troubleshooting
+
+
+
