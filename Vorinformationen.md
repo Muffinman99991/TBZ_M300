@@ -43,12 +43,13 @@ Bezüglich Virtualisierung besuche ich zum jetzigen Zeitpunkt den überbetriebli
 
 &#160;
 
-### Linux (Ubuntu)
+### Linux
 Die Grundlagen von Linux und Unix behersche ich gut. Seit einem halben Jahr bin ich bei der Arbeit im Linux Team unsere Firma tätig.
 Ein Guru in Linux bin ich jedoch nicht
 
 #### Kentnisse in:
 * Navigieren in der Bash
+* Ubuntu
 
 #### Neuland:
 * IP-Tables und ufw Firewall in Linux konfigurieren
