@@ -40,6 +40,7 @@ Bezüglich Virtualisierung besuche ich zum jetzigen Zeitpunkt den überbetriebli
 * Oracle VirtualBox
 * Container bzw. Betriebssystem-Virtualisierung
 
+&#160;
 
 ### Linux (Ubuntu)
 Die Grundlagen von Linux und Unix behersche ich gut. Seit einem halben Jahr bin ich bei der Arbeit im Linux Team unsere Firma tätig.
@@ -53,14 +54,17 @@ Ein Guru in Linux bin ich jedoch nicht
 * Git-Bash
 * Alle Befehle automatisiert ausführen (ohne einen Input zu geben)
 
+&#160;
 
 ### Vagrant
 Bei diesem Thema ist für mich alles Neuland und ich besitzt keine Vorkentnisse.
 
+&#160;
 
 ### Git
 Auch mit Git hatte ich mich bis zu diesem Modul noch nciht befasst. Ich war oft auch GitHub unterwegs um diverse programme/Tools herunterzuladen, war mir jedoch nie bewusst, was Git üerhaupt ist. Die Markdown Sprache ist Ebenfalls Neuland für mich.
 
+&#160;
 
 ### OpenVPN
 Hatte Zuhause schon einen VPN Sevrer aufgesetzt, musste dabei jedoch keine Änderung am Server bzw. am Server Config-File ändern. Kentnnise in diesem Gebiet und vorallem mit OpenVPN sind relativ gut.
@@ -71,6 +75,8 @@ Hatte Zuhause schon einen VPN Sevrer aufgesetzt, musste dabei jedoch keine Ände
 
 #### Neuland:
 * Server so zu bearbeiten, dass dieser Traffic an ein weiteres Netz weiterleitet.
+
+&#160;
 
 ### Apache
 Kenntnise eher mangelnd. Ich installiere des öfteren einen Apache Webserver in Linux Umgebungen, konfigurierte diesen jedoch noch nie.
