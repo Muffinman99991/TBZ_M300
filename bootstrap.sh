@@ -12,9 +12,8 @@
 #Wecheln zum Root User. Somit werden alle der folgenden Befehle als root ausgefuehrt
 sudo su
 
-
-#Root Passwort setzen (Passwort Miau123 sollte durch ein sicheres Passwort ersetzt werden!) und SSH-Login als Root erlauben. 
-#Ohne diesen Schritt ist es zu einem spaeteren Zeitpunkt nicht moeglich, per scp die Zertifikate vom Server herunterzuladen.
+#Root Passwort setzen und SSH-Login als Root erlauben. Ohne diesen Schritt ist es zu einem spaeteren Zeitpunkt nicht moeglich,
+#per scp die Certificate vom Server herunterzuladen
 echo "root:Miau123"|chpasswd
 sed -i s/without-password/yes/g /etc/ssh/sshd_config
 service ssh reload
@@ -40,6 +39,15 @@ cp -r /usr/share/easy-rsa /etc/openvpn/easy-rsa2
 cd /etc/openvpn/easy-rsa2/
 cp openssl-1.0.0.cnf openssl.cnf
 mkdir keys
+
+sed -i s/'export KEY_COUNTRY="US"'/'export KEY_COUNTRY="CH"'/g /etc/openvpn/easy-rsa2/vars
+sed -i s/'export KEY_PROVINCE="CA"'/'export KEY_PROVINCE="ZH"'/g /etc/openvpn/easy-rsa2/vars
+sed -i s/'export KEY_CITY="SanFrancisco"'/'export KEY_CITY="Zuerich"'/g /etc/openvpn/easy-rsa2/vars
+sed -i s/'export KEY_ORG="Fort-Funston"'/'export KEY_ORG="TBZ"'/g /etc/openvpn/easy-rsa2/vars
+sed -i s/'export KEY_EMAIL="me@myhost.mydomain"'/'export KEY_EMAIL="marvin.haimoff@edu.tbz.ch"'/g /etc/openvpn/easy-rsa2/vars
+sed -i s/'export KEY_OU="MyOrganizationalUnit"'/'export KEY_OU="M300"'/g /etc/openvpn/easy-rsa2/vars
+
+
 source ./vars
 #Folgende vier Befehle lassen sich ohne sudo Paramater nicht starten, auch wenn man schon als Root angemeldet ist
 sudo -E ./clean-all
@@ -50,19 +58,25 @@ sudo -E ./build-key --batch client
 #Das Erstellen des Diffie-Hellman Schluessels dauert ein wenig laenger
 sudo -E ./build-dh
 
+cd /etc/openvpn/server/
+openvpn --genkey --secret ta.key
+
 #Alle sobene erstellten Zertifikate und deren Schluessel, werden in den Ordner /etc/openvpn/ kopiert. Somit muss das OpenVPN
 #Config File nicht mehr angepasst werden und die Zertifikate koennen anschliessend alle von diesem Ordner zum Client kopiert werden
 cp /etc/openvpn/easy-rsa2/keys/ca.crt /etc/openvpn/
-cp /etc/openvpn/easy-rsa2/keys/server.crt /etc/openvpn/
-cp /etc/openvpn/easy-rsa2/keys/server.key /etc/openvpn/
-cp /etc/openvpn/easy-rsa2/keys/client.key /etc/openvpn/
-cp /etc/openvpn/easy-rsa2/keys/client.crt /etc/openvpn/
+cp /etc/openvpn/easy-rsa2/keys/server.crt /etc/openvpn/server/
+cp /etc/openvpn/easy-rsa2/keys/server.key /etc/openvpn/server/
+cp /etc/openvpn/easy-rsa2/keys/client.key /etc/openvpn/client/
+cp /etc/openvpn/easy-rsa2/keys/client.crt /etc/openvpn/client/
 cp /etc/openvpn/easy-rsa2/keys/dh2048.pem /etc/openvpn/
 
 #Im Server-Conf File Compression aktivieren und tls-Authentifizierung deaktivieren
 sed -i s/';comp-lzo'/comp-lzo/g /etc/openvpn/server.conf
-sed -i s/'tls-auth ta.key'/';tls-auth ta.key'/g /etc/openvpn/server.conf
-sed -i '253 i\auth SHA256' /etc/openvpn/server.conf
+sed -i s/'tls-auth ta.key'/'tls-auth \/etc\/openvpn\/server\/ta.key'/g /etc/openvpn/server.conf
+sed -i s/'cert server.crt'/'cert \/etc\/openvpn\/server\/server.crt'/g /etc/openvpn/server.conf
+sed -i s/'key server.key'/'key \/etc\/openvpn\/server\/server/server.key '/g /etc/openvpn/server.conf
+sed -i '253 i\auth SHA512' /etc/openvpn/server.conf
+sed -i s/'cipher AES-256-CBC'/';cipher AES-256-CBC'/g /etc/openvpn/server.conf
 
 
 
@@ -100,11 +114,11 @@ apt install -y iptables-persistent
 
 
 ##################VPN SERVER STARTEN#####################
+service openvpn restart
 systemctl start openvpn@server
 
 #Bei Fehlermedlung Status checken:
 #systemctl status openvpn@server
-
 
 
 
