@@ -24,6 +24,7 @@ Was ist Apache?
 
 Apache ist ein Opensource Webservice, welcher simple zu konfigurieren ist (meist reicht das installieren des Services und das austauschen des index.html Files schon) 
 
+&#160;
 
 Persönlicher Wissenstand (vor LB1)
 -------------
