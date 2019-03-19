@@ -66,7 +66,7 @@ Die virtuelle Maschiene wird dem Befehl ``vagrant up`` erstellt. Hier zu ist es 
 
 Bei einem Fehler wird die entsprechende Linie sowie der Fehler angezeigt.
 
-<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/validate_error.PNG" alt="Validate" width="460"/>
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/validate_error.PNG" alt="Validate Error" width="460"/>
 &#160;
 
 Nachdem die VM erfolgreich erstellt wurde, gelangt man zurück zu seiner Kommandozeile. Mit dem Befehl ``vagrant status`` lässt sich zusätzlich anzeigen, in welchem Zustand sich die VM befindet bzw. ob diese überhaupt erstellt wurde.
@@ -75,7 +75,6 @@ Nun lässt sich per ``vagrant ssh`` eine SSH Session zur VM öffnen.
 
 
 ## OpenVPN Client installieren
-
 Sobald der [OpenVPN Client](https://openvpn.net/community-downloads/) installiert wurde, kann das Config File in den Ordner ``C:\Program Files\OpenVPN\config`` kopiert werden. In diesem Ordner müssen sich ausserdem alle zum Aufbau des VPN-Tunnels notwendigen Zertifikate und Schlüssel befinden.
 
 Das Config File lässt sich von meinem Repo [hier](https://github.com/Muffinman99991/TBZ_M300/blob/master/client.ovpn) downloaden. 
@@ -92,9 +91,15 @@ Auch in diesem File gilt es, die bei jeder Linie die IP-Adresse des Servers, sow
 Möchte das Passwort nicht in plaintext angegebn werden, so kann der Parameter ``-pw`` weggelassen werden und man wird beim Ausühren vier Mal nach dem Root Passwort aufgefordert.
 
 Bei erfolgreichem Ausführen der Datei, erscheint folgende Ausgabe:
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/get-certs.PNG" alt="BashFile Ausgabe" width="710"/>
+
+**Wichtig:** Das Batch File muss als Administrator ausgeführt werden
 
 ## Mit VPN verbinden
+Um sich nun per VPN mit dem Server zu verbinden, muss dass der OpenVPN Client gestartet werden (ausführen als Administrator). Anschliessend erscheint in der Taskleiste ganz rechts folgendes Symbol: <img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/ovpn-client.PNG" alt="OpenVPN Client Symbol" width="30"/>
 
+Per Rechtsklick auf dieses und "Verbinden", beginnt der Datenaustausch zwischen dem Client bzw. den Client Tunnel Adapter und dem Server bzw. dem Server Tunnel Adapter. Dieser Vorgang kann bis zu einer Minute dauern. Im Statusfenster sollte während dem gesammmten Verbindungsaufbau keine roter Text (Fehlermeldungen) erscheinen.
+Sobal die Verbindung aufgebaut wurde, erschient das Icon in der Taskleiste grün.
 
 
 ## Testing / Troubleshooting
