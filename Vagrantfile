@@ -4,11 +4,13 @@
 
 
 Vagrant.configure("2") do |config|
-  # Vagrant Dokumentation: https://docs.vagrantup.com.
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
 
 
   # Die Vagrant Box und das Skript, welches auf der VM ausgeführt wird, wird definiert
-  # Alle Boxen sind auf: https://vagrantcloud.com/search.
+  # boxes sind auf https://vagrantcloud.com/search.
   config.vm.box = "generic/ubuntu1804"
   config.vm.provision "shell", path: "bootstrap.sh"
 
@@ -29,23 +31,24 @@ Vagrant.configure("2") do |config|
   
  
  
- ############Wenn der Apache vom VPN aus nicht erreicht / gepingt werden kann,
- # dann als Test folgende Linien auskommentieren
- #INFO: 192.168.33.1 muss durch den gewünschten neuen Gateway ersetzt werden
- #INFO: eth0 muss 2x durch das  Interface ersetzt werden, von der die Default
- #Route gelöscht werden möchte (könnte z.B auch "ens33" sein)
- ############
+############Wenn der Apache vom VPN aus nicht erreicht / gepingt werden kann,
+# dann als Test folgende Linien auskommentieren
+#INFO: 192.168.33.1 muss durch den gewünschten neuen Gateway ersetzt werden
+#INFO: eth0 muss 2x durch das  Interface ersetzt werden, von der die Default
+#Route gelöscht werden möchte (könnte z.B auch "ens33" sein)
+############
 
- ##############Ab hier auskomentieren!#############
- #config.vm.provision "shell",
- #  run: "always",
- #  inline: "route add default gw 192.168.33.1"
+##############Ab hier auskomentieren!#############
+#config.vm.provision "shell",
+#  run: "always",
+#  inline: "route add default gw 192.168.33.1"
 
- # delete default gw on eth0
- #config.vm.provision "shell",
- #  run: "always",
- # inline: "eval `route -n | awk '{ if ($8 ==\"eth0\" && $2 != 
- #\"0.0.0.0\") print \"route del default gw \" $2; }'`"
- ###################################################
- 
+# delete default gw on eth0
+#config.vm.provision "shell",
+#  run: "always",
+# inline: "eval `route -n | awk '{ if ($8 ==\"eth0\" && $2 != 
+#\"0.0.0.0\") print \"route del default gw \" $2; }'`"
+###################################################
+  
+  
 end

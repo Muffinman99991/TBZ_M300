@@ -74,7 +74,7 @@ cp /etc/openvpn/easy-rsa2/keys/dh2048.pem /etc/openvpn/
 sed -i s/';comp-lzo'/comp-lzo/g /etc/openvpn/server.conf
 sed -i s/'tls-auth ta.key'/'tls-auth \/etc\/openvpn\/server\/ta.key'/g /etc/openvpn/server.conf
 sed -i s/'cert server.crt'/'cert \/etc\/openvpn\/server\/server.crt'/g /etc/openvpn/server.conf
-sed -i s/'key server.key'/'key \/etc\/openvpn\/server\/server/server.key '/g /etc/openvpn/server.conf
+sed -i s/'key server.key'/'key \/etc\/openvpn\/server\/server.key '/g /etc/openvpn/server.conf
 sed -i '253 i\auth SHA512' /etc/openvpn/server.conf
 sed -i s/'cipher AES-256-CBC'/';cipher AES-256-CBC'/g /etc/openvpn/server.conf
 
@@ -120,6 +120,7 @@ systemctl start openvpn@server
 #Bei Fehlermedlung Status checken:
 #systemctl status openvpn@server
 
+
 ##################APACHE SSL KONFIGURIEREN##############################
 a2enmod ssl
 service apache2 restart
@@ -133,8 +134,6 @@ sed -i s/'\/etc\/ssl\/private\/ssl-cert-snakeoil.key'/'\/etc\/apache2\/ssl\/apac
 a2ensite default-ssl.conf
 
 service apache2 restart
-
-
 
 
 #Viel Spass :D
