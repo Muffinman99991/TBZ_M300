@@ -9,6 +9,7 @@ Folgend die Ziele:
 * Mit Zertifikaten wird erfolgreich eine Verbindung zum VPN Server aufgebaut
 * Vom VPN Netz aus ist eine Verbindung ins Internet möglich
 * Webseiten des Apaches sind nur innerhalb des VPNs erreichbar. Von einer Person, welche sich im gleichen Netz wie die virtuelle Maschiene befindet, ist der Webserver nicht erreichbar
+* Die Webseiten werden mit SSL erweiteret, wodurch der Zugriff per HTTPS möglich wird
 
 <img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/Vagrant.png" alt="drawing" width="150"/> &#160; &#160; &#160; &#160; &#160; &#160;<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/oracle.png" alt="drawing" width="180"/> <img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/openvpn.png" alt="drawing" width="140"/> &#160; <img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/apache.png" alt="drawing" width="200"/> 
 
