@@ -65,7 +65,6 @@ Die virtuelle Maschiene wird dem Befehl ``vagrant up`` erstellt. Hier zu ist es 
 &#160;
 
 Bei einem Fehler wird die entsprechende Linie sowie der Fehler angezeigt.
-
 <img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/validate_error.PNG" alt="Validate Error" width="460"/>
 &#160;
 
@@ -93,7 +92,7 @@ Auch in diesem File gilt es, die bei jeder Linie die IP-Adresse des Servers, sow
 Möchte das Passwort nicht in plaintext angegebn werden, so kann der Parameter ``-pw`` weggelassen werden und man wird beim Ausühren vier Mal nach dem Root Passwort aufgefordert.
 
 Bei erfolgreichem Ausführen der Datei, erscheint folgende Ausgabe:
-<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/get-certs.PNG" alt="BashFile Ausgabe" width="710"/>
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/get-certs.PNG" alt="BashFile Ausgabe" width="720"/>
 
 **Wichtig:** Das Batch File muss als Administrator ausgeführt werden
 
@@ -108,6 +107,10 @@ Sobal die Verbindung aufgebaut wurde, erschient das Icon in der Taskleiste grün
 &#160;
 
 ## Testing / Troubleshooting
+Wird nun vom Host aus ein beliebiger Browser aufgerufen und https://10.8.0.1/ eingegeben, so erscheint die Standard Apache Webseite (das index.html File wird aufgerufen):
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/apache-site.PNG" alt="Apache Index.html" width="1000"/>
+
+Da der Apache Webserver nur auf dieser IP-Adresse hört, ist es nutzlos die öffentliche IP des Servers im Browser anzugeben.
 
 
 
