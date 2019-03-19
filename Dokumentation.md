@@ -56,7 +56,7 @@ In das Bash skript werden alle Befehle reingeschrieben, welche auf der VM ausgef
 
 Damit die VM weis, um welche Sprache es sich bei dem Skript handelt, muss in der ersten Linie des Skripts `#!/bin/bash` stehen. Gefolgt von `sudo su`, denn so muss nicht vor jedem Befehl manuell als SuperUser (`sudo`) ausgeführt werden.
 
-
+&#160;
 
 ## VM erstellen
 Die virtuelle Maschiene wird dem Befehl ``vagrant up`` erstellt. Hier zu ist es wichtig, dass das Vagrant File im betreffenden Ordner vorhanden ist, und zugleich keine Fehler aufweist. Um das Vagrant File nach Fehler zu überprüfen, kann der Befehl ``vagrant validate`` angewendet werden.
@@ -73,6 +73,7 @@ Nachdem die VM erfolgreich erstellt wurde, gelangt man zurück zu seiner Kommand
 
 Nun lässt sich per ``vagrant ssh`` eine SSH Session zur VM öffnen.
 
+&#160;
 
 ## OpenVPN Client installieren
 Sobald der [OpenVPN Client](https://openvpn.net/community-downloads/) installiert wurde, kann das Config File in den Ordner ``C:\Program Files\OpenVPN\config`` kopiert werden. In diesem Ordner müssen sich ausserdem alle zum Aufbau des VPN-Tunnels notwendigen Zertifikate und Schlüssel befinden.
@@ -80,6 +81,7 @@ Sobald der [OpenVPN Client](https://openvpn.net/community-downloads/) installier
 Das Config File lässt sich von meinem Repo [hier](https://github.com/Muffinman99991/TBZ_M300/blob/master/client.ovpn) downloaden. 
 Wichtig ist dabei nur, dass die IP Adresse des Servers (auf der ersten Linie) angepasst wird. Der Rest stimmt, voraussichtlich dass bootstrap.sh und Get-Certs.bat File, wurden für die Konfiguration des Servers benutzt.
 
+&#160;
 
 ## Zertifikate vom Server herunterladen
 Das Batch-File lässt sich [hier](https://github.com/Muffinman99991/TBZ_M300/blob/master/Get-Certs.bat) downloaden. 
@@ -95,12 +97,15 @@ Bei erfolgreichem Ausführen der Datei, erscheint folgende Ausgabe:
 
 **Wichtig:** Das Batch File muss als Administrator ausgeführt werden
 
+&#160;
+
 ## Mit VPN verbinden
 Um sich nun per VPN mit dem Server zu verbinden, muss dass der OpenVPN Client gestartet werden (ausführen als Administrator). Anschliessend erscheint in der Taskleiste ganz rechts folgendes Symbol: <img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/ovpn-client.PNG" alt="OpenVPN Client Symbol" width="30"/>
 
 Per Rechtsklick auf dieses und "Verbinden", beginnt der Datenaustausch zwischen dem Client bzw. den Client Tunnel Adapter und dem Server bzw. dem Server Tunnel Adapter. Dieser Vorgang kann bis zu einer Minute dauern. Im Statusfenster sollte während dem gesammmten Verbindungsaufbau keine roter Text (Fehlermeldungen) erscheinen.
 Sobal die Verbindung aufgebaut wurde, erschient das Icon in der Taskleiste grün.
 
+&#160;
 
 ## Testing / Troubleshooting
 
