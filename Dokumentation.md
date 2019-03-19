@@ -61,7 +61,7 @@ Damit die VM weis, um welche Sprache es sich bei dem Skript handelt, muss in der
 ## VM erstellen
 Die virtuelle Maschiene wird dem Befehl ``vagrant up`` erstellt. Hier zu ist es wichtig, dass das Vagrant File im betreffenden Ordner vorhanden ist, und zugleich keine Fehler aufweist. Um das Vagrant File nach Fehler zu überprüfen, kann der Befehl ``vagrant validate`` angewendet werden.
 
-<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/validate.png" alt="Validate" width="400"/>
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/validate.PNG" alt="Validate" width="300"/>
 
 Bei einem Fehler wird die entsprechende Linie sowie der Fehler angezeigt.
 
