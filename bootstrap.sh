@@ -72,7 +72,10 @@ cp /etc/openvpn/easy-rsa2/keys/dh2048.pem /etc/openvpn/
 
 #Im Server-Conf File Compression aktivieren und tls-Authentifizierung deaktivieren
 sed -i s/';comp-lzo'/comp-lzo/g /etc/openvpn/server.conf
+sed -i s/';user nobody'/'user nobody'/g /etc/openvpn/server.conf
+sed -i s/';group nogroup'/'group nogroup'/g /etc/openvpn/server.conf
 sed -i s/'tls-auth ta.key'/'tls-auth \/etc\/openvpn\/server\/ta.key'/g /etc/openvpn/server.conf
+sed -i '245 i\key-direction 0' /etc/openvpn/server.conf
 sed -i s/'cert server.crt'/'cert \/etc\/openvpn\/server\/server.crt'/g /etc/openvpn/server.conf
 sed -i s/'key server.key'/'key \/etc\/openvpn\/server\/server.key '/g /etc/openvpn/server.conf
 sed -i '253 i\auth SHA512' /etc/openvpn/server.conf
@@ -134,6 +137,39 @@ sed -i s/'\/etc\/ssl\/private\/ssl-cert-snakeoil.key'/'\/etc\/apache2\/ssl\/apac
 a2ensite default-ssl.conf
 
 service apache2 restart
+
+
+
+#####BERECHTIGUNGEN VON FILES/ORDNER AENDERN#############
+useradd -M opache-admin
+echo "opache-admin:Miau123$"|chpasswd
+
+chown opache-admin /etc/openvpn/server
+chmod 700 /etc/openvpn/server
+
+chown opache-admin /etc/openvpn/client
+chmod 700 /etc/openvpn/client
+
+chown opache-admin /etc/openvpn/easy-rsa2
+chmod 700 /etc/openvpn/easy-rsa2
+
+chown opache-admin /etc/openvpn/ca.crt
+chmod 700 /etc/openvpn/ca.crt
+
+chown opache-admin /etc/openvpn/dh2048.pem
+chmod 700 /etc/openvpn/dh2048.pem
+
+
+
+chown opache-admin /etc/apache2/ssl
+chmod 700 /etc/apache2/ssl
+
+
+
+
+
+
+
 
 
 #Viel Spass :D
