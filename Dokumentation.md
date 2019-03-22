@@ -113,7 +113,6 @@ UFW steht für "Uncomplicated Firewall" und ist Heutzutage in vielen Linux / Uni
 Die Firewall des Opache Servers lässt nur die Ports 22, 1194, 80 und 443 druch. Alle restlichen Ports werden von der Firewall blockiert. Ist ist also grundsätzlich sinnlos zu versuchen  mit einem anderen Port aud die FW zuzugreifen.
 
 <img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/ufw.PNG" alt="ufw" width="390"/>
-&#160;
 
 ### Lokale Berechtigungen
 Damit die Verwaltung auf dem Opache Server einfacher und zugleich sicherer wird, wurde ein zusätzlicher benutzer erstellt. Nur dieser (und der Root) darf sicherheitsrelevante Daten wie die Schlüssel und co. anschauen und bearbeiten. Ebenfalls ist er der einzige User, welcher Apache SSL Certs erstellen und verwalten darf.
