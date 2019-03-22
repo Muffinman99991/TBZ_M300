@@ -17,8 +17,6 @@ welche Probleme mit IP-Routen aufweist. Die OpenVPN Version muss 2.4 oder höher
 ### Vagrant Initialisieren
 Damit eine virtuelle Maschiene mittels Vagrant erstellt werden kann, muss dazu der entsprechenden Ordner als Vagrant Umgebung initialisiert werden. Dies wird mit `vagrant init` erstellt (innerhalb des Ordners).
 
-Bild
-
 
 ## Vagrant File bearbeiten
 Anschliessend kann das Vagrant File nach Belieben verändert werden. Ich entschied mich für die Vagrant Cloud Box **generic/ubuntu1804**, da es sich bei dieser Version um eine reativ neue handelt. Zu empfehlen wäre ebenso die Box **generic/ubuntu1810**.
