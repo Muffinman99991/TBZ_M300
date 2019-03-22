@@ -1,4 +1,3 @@
-<<<<<<< HEAD:files/bootstrap.sh
 #!/bin/bash
 ##################################
 #Autor: Marvin Haimoff  	 #
@@ -281,7 +280,10 @@ service apache2 restart
 
 
 #####BERECHTIGUNGEN VON FILES/ORDNER AENDERN#############
+#User opache-admin wird hinzugefügt
 useradd -M opache-admin
+
+#opache User PW wird gesetzt
 echo "opache-admin:Miau123$"|chpasswd
 
 chown opache-admin /etc/openvpn/server
@@ -300,17 +302,10 @@ chown opache-admin /etc/openvpn/dh2048.pem
 chmod 700 /etc/openvpn/dh2048.pem
 
 
-
 chown opache-admin /etc/apache2/ssl
 chmod 700 /etc/apache2/ssl
 
 
 
 
-
-
-
-
-
->>>>>>> d7c3e7e473dea92c92eea8d952c9122e6a48234d:bootstrap.sh
 #Viel Spass :D
