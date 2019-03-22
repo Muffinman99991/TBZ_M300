@@ -103,11 +103,11 @@ In Vagrant konnte ich mit mir Abstand am meisten Wissen aneignen. Ich kenne die 
 
 In Bezug auf Git lernte ich ebenfalls Einiges. Mir wurde während dieser LB klar, warum GIT benutzt wird, wie dieses Verionsverlauf Tool nützlich sein könnte und vorallem, wie es angewendet wird. In dieser gesammten Zeit schickte (Push & Commit) ich dutzende Dokumente von Git Bash oder Visual Studios aus an mein Github Repository.
 
-Bei OpenVPN konnte ich meiner Meinung nach nicht viel Neues lernen. Bis jetzt hatte ich noch nie mit einem TA-Key (TLS Authentication Key) eine Verbindung zu einem OpenVPN Server aufgebaut. Zudem wurde mir klar wurde warum dieser Schlüssel nützlich sein könnte (der Verbindungskanal zwischen Client und OpenVPN Server, welcher genutzt wird um die Schlüssel auszutauschen, wird zusätzlich verschlüsselt. Durch diesen Vorgang können nicht unendlich viele Pakete zur ...)
+Bei OpenVPN konnte ich meiner Meinung nach nicht viel Neues lernen. Bis jetzt hatte ich noch nie mit einem TA-Key (TLS Authentication Key) eine Verbindung zu einem OpenVPN Server aufgebaut. Zudem wurde mir klar wurde warum dieser Schlüssel nützlich sein könnte (der Verbindungskanal zwischen Client und OpenVPN Server, welcher genutzt wird um die Schlüssel auszutauschen, wird zusätzlich verschlüsselt. Durch diesen Vorgang können DDOS Attacken gegnüber dem )
 
-###Reflexion
+### Reflexion
 
-...
+Zahlreiche Stunden investierte ich in diese Lernbeurteilung und konnte einiges mitnehmen. Für eine ganze Weile funktionierte der Zugriff auf das VPN nicht. Schlussendlich fand ich heraus, dass dies an einer veralteten OpenVPN Version lag. Diese leitet die entsprechenden Routen nicht weiter, weswegen nichts ins Internet zugegriffen werden konnte und ebenso nichts ins LAN. Für nächstes Projekt nehme ich mir mit, dass ich von Anfang an darauf achte, die aktuellste Distribution zu verwenden. Denn die neusten Distris beinhalten in Ihren Repos auch jeweils immer die neusten Version des entsprechenden Programms. In meinem Fall beherbergte Ubuntu 16.04 in ihren Repos einen Link zur OpenVPN Version kleiner als 2.4.
 
 
 
