@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
 
 
   #Netzwerkadapter der VM wird mit dem physischen Adapter der Host Maschiene gebridged.
-  config.vm.network "public_network", ip: "192.168.192.64"
+  config.vm.network "public_network", ip: "10.71.13.4"
 
 
   #Shared Folder (damit das index.html File von Apache auf diesem Host abgelegt wird)
