@@ -83,5 +83,33 @@ Hatte Zuhause schon einen VPN Sevrer aufgesetzt, musste dabei jedoch keine Ände
 ### Apache
 Kenntnise eher mangelnd. Ich installiere des öfteren einen Apache Webserver in Linux Umgebungen, konfigurierte diesen jedoch noch nie.
 
+&#160;
+
+Wissenszuwachs & Reflexion
+-------------
+
+### Wissenzuwachs
+
+Während dieser LB1 konnte ich mir viel neues Wissen aneignen. Im Bezug auf Linux konnte ich allgemein mein "Command-Wörterbuch" drastisch erweitern. Mit dem Command ``sed`` hatte ich bis jetzt noch nichts am Hut, obwohl dieser in Hinsicht auf Automatisierung sehr hilfreich ist. Ebenso lernte ich einiges über IP-Routen und deren Konfiguration in Linux.
+
+Ausserdem konfigurierte ich Apache das erste Mal mit SSL und lernte doch einiges über die Funktionsweise von Webservern, insbesondere in Linux-Umbebungen. Hinsichtlich der Zertifikaten war nichts neuland für mich, da ich mit diese schon des Öfteren arbeitete.
+
+In Vagrant konnte ich mit mir Abstand am meisten Wissen aneignen. Ich kenne die meisten Befehle im Bezug auf Vagrant, verstehe das Vagrant File und kann sogar den Ablauf beim automatisierten Erstellen einer VM aufzählen:
+
+1. Virtuelle Maschiene wird im provider Programm kreiert (in meinem Fall Oracle Virtualbox). Zudem wird die VM mit einem weiteren NAT Interface ausgestattet, über welches die SSH Verbinung erfolgt
+2. SSH Schlüssel werden zwischen Host und VM ausgetauscht. Evt. wird einer neuer privater SSH-Schlüssel erstellt
+3. Die SSH Verbindung wird getestet
+4. Per SSH verbindung wird das Bootstrap.sh Skript auf die VM geladen und ausgeführt
+
+In Bezug auf Git lernte ich ebenfalls Einiges. Mir wurde während dieser LB klar, warum GIT benutzt wird, wie dieses Verionsverlauf Tool nützlich sein könnte und vorallem, wie es angewendet wird. In dieser gesammten Zeit schickte (Push & Commit) ich dutzende Dokumente von Git Bash oder Visual Studios aus an mein Github Repository.
+
+Bei OpenVPN konnte ich meiner Meinung nach nicht viel Neues lernen. Bis jetzt hatte ich noch nie mit einem TA-Key (TLS Authentication Key) eine Verbindung zu einem OpenVPN Server aufgebaut. Zudem wurde mir klar wurde warum dieser Schlüssel nützlich sein könnte (der Verbindungskanal zwischen Client und OpenVPN Server, welcher genutzt wird um die Schlüssel auszutauschen, wird zusätzlich verschlüsselt. Durch diesen Vorgang können nicht unendlich viele Pakete zur ...)
+
+###Reflexion
+
+...
+
+
+
 
 
