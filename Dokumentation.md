@@ -40,7 +40,7 @@ Da unsere VM direkt vom LAN erreichbar sein sollte (Bridged), muss die folgende 
 Zusätzlich kann dann noch eine statishce IP, sowie das gebdridge Interface ausgewählt werden:
 
 ```
-config.vm.network "public_network", ip: "10.71.13.4", bridge: "en1: ASXI Adapter"
+config.vm.network "public_network", ip: "10.71.13.4"
 ```
 &#160;
 
@@ -77,13 +77,13 @@ Nun lässt sich per ``vagrant ssh`` eine SSH Session zur VM öffnen.
 ## OpenVPN Client installieren
 Sobald der [OpenVPN Client](https://openvpn.net/community-downloads/) installiert wurde, kann das Config File in den Ordner ``C:\Program Files\OpenVPN\config`` kopiert werden. In diesem Ordner müssen sich ausserdem alle zum Aufbau des VPN-Tunnels notwendigen Zertifikate und Schlüssel befinden.
 
-Das Config File lässt sich von meinem Repo [hier](https://github.com/Muffinman99991/TBZ_M300/blob/master/client.ovpn) downloaden. 
+Das Config File lässt sich von meinem Repo [hier](https://github.com/Muffinman99991/TBZ_M300/blob/master/files/client.ovpn) downloaden. 
 Wichtig ist dabei nur, dass die IP Adresse des Servers (auf der ersten Linie) angepasst wird. Der Rest stimmt, voraussichtlich dass bootstrap.sh und Get-Certs.bat File, wurden für die Konfiguration des Servers benutzt.
 
 &#160;
 
 ## Zertifikate vom Server herunterladen
-Das Batch-File lässt sich [hier](https://github.com/Muffinman99991/TBZ_M300/blob/master/Get-Certs.bat) downloaden. 
+Das Batch-File lässt sich [hier](https://github.com/Muffinman99991/TBZ_M300/blob/master/files/Get-Certs.bat) downloaden. 
 Damit dieses erfolgreich ausgeführt wird, ist pscp.exe zwingend notwendig. Pscp wird mit der Standardinstallation von Putty mitinstalliert. 
 
 Auch in diesem File gilt es, die bei jeder Linie die IP-Adresse des Servers, sowie das root Passwort des Servers anzugeben:
@@ -106,6 +106,29 @@ Sobal die Verbindung aufgebaut wurde, erschient das Icon in der Taskleiste grün
 
 &#160;
 
+## Sicherheit
+
+### Firewall (UFW)
+UFW steht für "Uncomplicated Firewall" und ist Heutzutage in vielen Linux / Unix Distros die vorinstallierte Firewall. 
+Die Firewall des Opache Servers lässt nur die Ports 22, 1194, 80 und 443 druch. Alle restlichen Ports werden von der Firewall blockiert. Ist ist also grundsätzlich sinnlos zu versuchen  mit einem anderen Port aud die FW zuzugreifen.
+
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/ufw.PNG" alt="ufw" width="390"/>
+&#160;
+
+### Lokale Berechtigungen
+Damit die Verwaltung auf dem Opache Server einfacher und zugleich sicherer wird, wurde ein zusätzlicher benutzer erstellt. Nur dieser (und der Root) darf sicherheitsrelevante Daten wie die Schlüssel und co. anschauen und bearbeiten. Ebenfalls ist er der einzige User, welcher Apache SSL Certs erstellen und verwalten darf.
+
+Hier lässts sich anmerken, dass alle Zertifikate in der Regel auf einem dazu dedizierten Server verwaltet werden. Dieser Server sollte strengstens beobachtet werden und die Zertifikate und notwendigen Schlüssel sollten nur über einen sicheren ssh Tunnel an die Server geschickt werden (z.B, per SCP)
+
+### OpenVPN (Verschlüsselungen etc.) 
+Obwohl OpenVPN als relativ sicher gilt, ist dies stark von der Konfiguration von OpenVPN abhängig. Standardmässig benutzt OpenVPB "BL-CBC" als Verschlüsselungsalgorythmus. Da dieser als sehr veraltet gilt und zusätzlich schon geknackt wurde, empfielt es sich AES mit einer akzeptablen Bit Länge zu verwenden (256Bit oder mehr). Ich benutzte hierfür AES-256-GCM.
+
+Ebenso benutzt OpenVPN SHA1 als Hashwert. Auch bei diesem empfiehlt es sich die Bit lange um ein vielfaches zu erhöhen. Ich entschied ich mich hierfür für SHA512.
+
+Damit der Kanal, über den die Zertifikate ausgetauscht werden, zusätzlich gesichert wird, wird ein PSK (Pre-shared-key) TLS Key verwendet.
+
+Alles diese Infos lassen sich in meinem [client.ovpn](https://github.com/Muffinman99991/TBZ_M300/blob/master/files/client.ovpn) File finden.
+
 ## Testing / Troubleshooting
 Wird nun vom Host aus ein beliebiger Browser aufgerufen und https://10.8.0.1/ eingegeben, so erscheint die Standard Apache Webseite (das index.html File wird aufgerufen):
 <img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/apache-site.PNG" alt="Apache Index.html" width="1000"/>
@@ -113,6 +136,26 @@ Wird nun vom Host aus ein beliebiger Browser aufgerufen und https://10.8.0.1/ ei
 Da der Apache Webserver nur auf dieser IP-Adresse hört, ist es nutzlos die öffentliche IP des Servers im Browser anzugeben.
 
 Um zu überprüfen, ob vom VPN aus ins Internet zugegriffen werden kann, kann nach einer hergestellten Verbinung vom Client zum Server eine öffentliche IP (z.B. im CMD) angepingt werden. 
+Kann kein Ping auf das Lan odr das Web ausgeführt werden, so können folgenden Linien im Vagrant File hinzugefügt werden:
 
+
+``config.vm.provision "shell",``
+
+  ``run: "always",``
+  
+  ``inline: "route add default gw 192.168.33.1"``
+
+ ``delete default gw on eth0``
+ 
+ ``config.vm.provision "shell",``
+ 
+  ``run: "always",``
+  
+ ``inline: "eval `route -n | awk '{ if ($8 ==\"eth0\" && $2 != \"0.0.0.0\") print \"route del default gw \" $2; }'`"``
+
+
+INFO1: 192.168.33.1 muss durch den gewünschten neuen Gateway ersetzt werden
+
+INFO2: eth0 muss 2x durch das  Interface ersetzt werden, von der die Default Route gelöscht werden möchte (könnte z.B auch "ens33" sein)
 
 
