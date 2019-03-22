@@ -130,7 +130,10 @@ Alles diese Infos lassen sich in meinem [client.ovpn](https://github.com/Muffinm
 Wird nun vom Host aus ein beliebiger Browser aufgerufen und https://10.8.0.1/ eingegeben, so erscheint die Standard Apache Webseite (das index.html File wird aufgerufen):
 <img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/apache-site.PNG" alt="Apache Index.html" width="1000"/>
 
-Da der Apache Webserver nur auf dieser IP-Adresse hört, ist es nutzlos die öffentliche IP des Servers im Browser anzugeben.
+Der Apache Server hört zwar auf jede Ip-Adresse des Ports 80 & 443, jedoch sind diese Ports in der UFW geschlossen, da nur vom VPN aus auf die Webseiten zugegriffen werden können. Es ist nutzlos die öffentliche IP des Servers im Browser anzugeben.
+
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/testfall.PNG" alt="index.html keinen Zugriff" width="750"/>
+
 
 Um zu überprüfen, ob vom VPN aus ins Internet zugegriffen werden kann, kann nach einer hergestellten Verbinung vom Client zum Server eine öffentliche IP (z.B. im CMD) angepingt werden. 
 Kann kein Ping auf das Lan odr das Web ausgeführt werden, so können folgenden Linien im Vagrant File hinzugefügt werden:
