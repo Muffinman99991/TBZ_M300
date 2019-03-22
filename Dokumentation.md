@@ -112,5 +112,7 @@ Wird nun vom Host aus ein beliebiger Browser aufgerufen und https://10.8.0.1/ ei
 
 Da der Apache Webserver nur auf dieser IP-Adresse hört, ist es nutzlos die öffentliche IP des Servers im Browser anzugeben.
 
+Um zu überprüfen, ob vom VPN aus ins Internet zugegriffen werden kann, kann nach einer hergestellten Verbinung vom Client zum Server eine öffentliche IP (z.B. im CMD) angepingt werden. 
+
 
 
