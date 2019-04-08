@@ -16,7 +16,13 @@ Folgend die Ziele:
 &#160;
 &#160;
 ## LB2
-Folgt...
+Das Prinzip der ersten LB bleibt auch bei dieser identsich. Mit dem Programm Docker, sollte ein -oder mehrere Conatiner erstellt werden, welche zussammen einen Service bilden. Es können die selben Servcies wie bei LB1 genutzt werden. Folgend die Ziele:
+
+* Zwei separate Container (OpenVPN & Apache) miteinander verknüpfen
+* Mit Zertifikaten wird erfolgreich eine Verbindung zum VPN Server aufgebaut
+* Vom VPN Netz aus ist eine Verbindung ins Internet möglich
+* Webseiten des Apaches sind nur innerhalb des VPNs oder der Host Maschine (auf der sich die Container befinden) erreichbar.
+* Die Webseiten werden mit SSL erweitert, wodurch der Zugriff per HTTPS möglich wird
 
 
 
