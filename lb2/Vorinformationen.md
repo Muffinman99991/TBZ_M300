@@ -10,10 +10,10 @@ Was ist Docker?
 -------------
 
 Docker ist ein Programm, mit welchem Container bzw. ganze Container-Umgebungen erstellt werden können. 
-Durch vordefinierte virtuelle Boxen (Vagrant Cloud Boxes), welche von offiziellen Herstellern oder von der Community 
-selbt erstellt werden, lassen sich jegliche Betriebssyteme in kürzester Zeit virtualisieren.
+Durch vordefinierte Images (auf Docker Hub), welche von offiziellen Herstellern oder von der Community 
+selbt erstellt werden, lassen sich diverse Container aller Art erstellen.
 
-[Alle verfügbaren Vagrant Boxen](https://app.vagrantup.com/boxes/search)
+[Alle verfügbaren Docker Images](https://www.docker.com/products/docker-hub)
 
 Was ist OpenVPN?
 -------------
@@ -33,22 +33,20 @@ Persönlicher Wissenstand (vor LB1)
 -------------
 
 ### Virtualisierung
-Bezüglich Virtualisierung besuche ich zum jetzigen Zeitpunkt den überbetrieblichen Kurs 340, welcher sich vollumfänglich mit Virtualisierung befasst. Ich besitzt dementspechende schon ein akzeptables Vorwissen an Virtualisierung.
+Bezüglich Virtualisierung besitze ich ein rtelativ breichgefächertes Wissen. Vor ein paar Wochen besuchte ich den überbetrieblichen Kurs 340, welcher sich vollumfänglich mit Virtualisierung befasst. Ich lernte einiges über Containervirtualisierung, erstellte jedoch bis zu dieser LB noch nie einen Container
 
 #### Kentnisse in:
 * VmWare Workstation
 * ESXi
 
 #### Neuland:
-* Vagrant
-* Oracle VirtualBox
-* Container bzw. Betriebssystem-Virtualisierung
+* Umgang mit Docker
 
 &#160;
 
 ### Linux
 Die Grundlagen von Linux und Unix behersche ich gut. Seit einem halben Jahr bin ich bei der Arbeit im Linux Team unsere Firma tätig.
-Ein Guru in Linux bin ich jedoch nicht
+Ein Guru in Linux bin ich jedoch nicht.
 
 #### Kentnisse in:
 * Navigieren in der Bash
@@ -61,13 +59,8 @@ Ein Guru in Linux bin ich jedoch nicht
 
 &#160;
 
-### Vagrant
+### Docker
 Bei diesem Thema ist für mich alles Neuland und ich besitzt keine Vorkentnisse.
-
-&#160;
-
-### Git
-Auch mit Git hatte ich mich bis zu diesem Modul noch nciht befasst. Ich war oft auch GitHub unterwegs um diverse programme/Tools herunterzuladen, war mir jedoch nie bewusst, was Git üerhaupt ist. Die Markdown Sprache ist Ebenfalls Neuland für mich.
 
 &#160;
 
@@ -76,15 +69,16 @@ Hatte Zuhause schon einen VPN Sevrer aufgesetzt, musste dabei jedoch keine Ände
 
 #### Kentnisse in:
 * OpenVPN Client konfigurieren bzw. Client Config-File
-* Zertifikate verwalten
+* Zertifikate verwalten & manuell erstellen
 
 #### Neuland:
 * Server so zu bearbeiten, dass dieser Traffic an ein weiteres Netz weiterleitet.
+* Client erstellen, indem alle Schlüssel in Form von Text eingetragen sind.
 
 &#160;
 
 ### Apache
-Kenntnise eher mangelnd. Ich installiere des öfteren einen Apache Webserver in Linux Umgebungen, konfigurierte diesen jedoch noch nie.
+Kenntnise eher mangelnd. Während der ersten LB konnte ich zwar einiges über Apache lernen, jedoch hauptsächlich nur über die Konfiguration in Bezug auf SSL. Ich müsste mich um ein Vielfaches intensiver mit Apache auseinandersetzen, damit ich darin das Meiste verstehe.
 
 &#160;
 
@@ -93,24 +87,30 @@ Wissenszuwachs & Reflexion
 
 ### Wissenzuwachs
 
-Während dieser LB1 konnte ich mir viel neues Wissen aneignen. Im Bezug auf Linux konnte ich allgemein mein "Command-Wörterbuch" drastisch erweitern. Mit dem Command ``sed`` hatte ich bis jetzt noch nichts am Hut, obwohl dieser in Hinsicht auf Automatisierung sehr hilfreich ist. Ebenso lernte ich einiges über IP-Routen und deren Konfiguration in Linux.
+Während dieser LB2 konnte ich mir viel neues Wissen aneignen. Im Bezug auf Linux konnte ich allgemein mein "Command-Wörterbuch" ein wenig erweitern. Dabei handelt es sich um kleine/simple Befehle, welche mir den Umgang mit Bash erleichert (z.B. mit Taste "home" an den Anfang der Zeile, mit ``history`| grep [Wort]`` nach einem beriets eingegebenen Befehl filtern usw.) 
+Da ich bis jetzt kaum mit Bash Skripten gearbeitet habe, lernte ich auch in diesem Bereich einiges.
 
-Ausserdem konfigurierte ich Apache das erste Mal mit SSL und lernte doch einiges über die Funktionsweise von Webservern, insbesondere in Linux-Umbebungen. Hinsichtlich der Zertifikaten war nichts neuland für mich, da ich mit diese schon des Öfteren arbeitete.
+In Docker konnte ich mit mir Abstand am meisten Wissen aneignen. Ich kenne die meisten Befehle im Bezug auf Docker und verstehe diese auch. Zudem kann ich den Ablauf beim automatisierten Erstellen eines Containers mittels Docker aufzählen:
 
-In Vagrant konnte ich mit mir Abstand am meisten Wissen aneignen. Ich kenne die meisten Befehle im Bezug auf Vagrant, verstehe das Vagrant File und kann sogar den Ablauf beim automatisierten Erstellen einer VM aufzählen:
+#### ``docker run [Image]``:
 
-1. Virtuelle Maschiene wird im provider Programm kreiert (in meinem Fall Oracle Virtualbox). Zudem wird die VM mit einem weiteren NAT Interface ausgestattet, über welches die SSH Verbinung erfolgt
-2. SSH Schlüssel werden zwischen Host und VM ausgetauscht. Evt. wird einer neuer privater SSH-Schlüssel erstellt
-3. Die SSH Verbindung wird getestet
-4. Per SSH verbindung wird das Bootstrap.sh Skript auf die VM geladen und ausgeführt
+1. Docker sucht im lokalen Image Ordner nach dem ausgewählten Image. Falls dies nicht vorhanden ist, wird es von Docker Hub heruntergeladen.
+2. Der Container wird gestartet und das Resultat wird ausgegeben. Jenachdem welcher Parameter verwendet wird, kann der Container auch im Hintergrund ausgeführt werden. 
 
-In Bezug auf Git lernte ich ebenfalls Einiges. Mir wurde während dieser LB klar, warum GIT benutzt wird, wie dieses Verionsverlauf Tool nützlich sein könnte und vorallem, wie es angewendet wird. In dieser gesammten Zeit schickte (Push & Commit) ich dutzende Dokumente von Git Bash oder Visual Studios aus an mein Github Repository.
+
+#### ``docker -t build [Image-Name] [Pfad zum Dockerfile]``
+
+1. Docker sucht nach dem Dockerfile im angegebenen Pfad
+2. Das Docker File wird von oben nach unten abgearbeitet. Pro Befehl (RUN, CMD etc.) wird ein neuer Container bzw. ein neues Images erstellt und dem neuen mitgegeben. Erst wenn alle Befehle ausgeführt wurden, wird das Image lokal gespeichert.
+
 
 Bei OpenVPN konnte ich meiner Meinung nach nicht viel Neues lernen. Bis jetzt hatte ich noch nie mit einem TA-Key (TLS Authentication Key) eine Verbindung zu einem OpenVPN Server aufgebaut. Zudem wurde mir klar wurde warum dieser Schlüssel nützlich sein könnte (der Verbindungskanal zwischen Client und OpenVPN Server, welcher genutzt wird um die Schlüssel auszutauschen, wird zusätzlich verschlüsselt. Durch diesen Vorgang können DDOS Attacken gegnüber dem )
 
 ### Reflexion
 
-Zahlreiche Stunden investierte ich in diese Lernbeurteilung und konnte einiges mitnehmen. Für eine ganze Weile funktionierte der Zugriff auf das VPN nicht. Schlussendlich fand ich heraus, dass dies an einer veralteten OpenVPN Version lag. Diese leitet die entsprechenden Routen nicht weiter, weswegen nichts ins Internet zugegriffen werden konnte und ebenso nichts ins LAN. Für nächstes Projekt nehme ich mir mit, dass ich von Anfang an darauf achte, die aktuellste Distribution zu verwenden. Denn die neusten Distris beinhalten in Ihren Repos auch jeweils immer die neusten Version des entsprechenden Programms. In meinem Fall beherbergte Ubuntu 16.04 in ihren Repos einen Link zur OpenVPN Version kleiner als 2.4.
+Zahlreiche Stunden investierte ich in diese Lernbeurteilung und konnte einiges mitnehmen. Leider war diese Lernbeurteilung kein voller Erfolg, da ich mein ursprünglich geplantes Ziel nicht erreicht habe.
+
+Für eine ganze Weile funktionierte der Zugriff auf das VPN nicht. Schlussendlich fand ich heraus, dass dies an einer veralteten OpenVPN Version lag. Diese leitet die entsprechenden Routen nicht weiter, weswegen nichts ins Internet zugegriffen werden konnte und ebenso nichts ins LAN. Für nächstes Projekt nehme ich mir mit, dass ich von Anfang an darauf achte, die aktuellste Distribution zu verwenden. Denn die neusten Distris beinhalten in Ihren Repos auch jeweils immer die neusten Version des entsprechenden Programms. In meinem Fall beherbergte Ubuntu 16.04 in ihren Repos einen Link zur OpenVPN Version kleiner als 2.4.
 
 
 
