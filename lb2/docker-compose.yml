@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  apache:
+    build: .
+    image: apache-ssl
+    container_name: running-apache-ssl
+    ports:
+      - "443:443"
+    tty: true
+
+networks:
+  -bridge
+
+networks:
+  default:
+    external:
+      name: opache-net
