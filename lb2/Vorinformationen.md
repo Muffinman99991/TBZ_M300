@@ -104,13 +104,15 @@ In Docker konnte ich mit mir Abstand am meisten Wissen aneignen. Ich kenne die m
 2. Das Docker File wird von oben nach unten abgearbeitet. Pro Befehl (RUN, CMD etc.) wird ein neuer Container bzw. ein neues Images erstellt und dem neuen mitgegeben. Erst wenn alle Befehle ausgeführt wurden, wird das Image lokal gespeichert.
 
 
-Bei OpenVPN konnte ich meiner Meinung nach nicht viel Neues lernen. Bis jetzt hatte ich noch nie mit einem TA-Key (TLS Authentication Key) eine Verbindung zu einem OpenVPN Server aufgebaut. Zudem wurde mir klar wurde warum dieser Schlüssel nützlich sein könnte (der Verbindungskanal zwischen Client und OpenVPN Server, welcher genutzt wird um die Schlüssel auszutauschen, wird zusätzlich verschlüsselt. Durch diesen Vorgang können DDOS Attacken gegnüber dem )
+Bei OpenVPN konnte ich meiner Meinung nach nicht viel Neues lernen. Mir war nicht klar dass ich eine gesammte PKI und alle Zertifikate nur anhand weniger Befehle erstellen kann.
 
 ### Reflexion
 
-Zahlreiche Stunden investierte ich in diese Lernbeurteilung und konnte einiges mitnehmen. Leider war diese Lernbeurteilung kein voller Erfolg, da ich mein ursprünglich geplantes Ziel nicht erreicht habe.
+Zahlreiche Stunden investierte ich in diese Lernbeurteilung und konnte einiges mitnehmen. Leider war diese Lernbeurteilung kein voller Erfolg, da ich mein ursprünglich geplantes Ziel nicht erreicht habe. Eigentlich solle der Apache Container nur über ein Interface mit dem OpenVPN Container verbunden werden, worauf dieser dann mit dem Host verbunden ist. Tatsächlich musste ich jedoch beide Container per Bridge mit dem Host verbinden. Dadurch lässt sich die Apache Website auch vom Host aufrufen, was so nicht geplant war. Von anderen Host im gleichen Netz ist dies jedoch nicht möglich, womit ich mein Ziel teils erreicht habe.
+Warum dies nicht funktionierte kann ich mir gut Vorstellen und ich hätte hierzu auch dutzende Lösungsvorschläge. Leider reichte mir die Zeit dafür nicht und ich muss das Resultat so annehmen wie es ist.
 
-Für eine ganze Weile funktionierte der Zugriff auf das VPN nicht. Schlussendlich fand ich heraus, dass dies an einer veralteten OpenVPN Version lag. Diese leitet die entsprechenden Routen nicht weiter, weswegen nichts ins Internet zugegriffen werden konnte und ebenso nichts ins LAN. Für nächstes Projekt nehme ich mir mit, dass ich von Anfang an darauf achte, die aktuellste Distribution zu verwenden. Denn die neusten Distris beinhalten in Ihren Repos auch jeweils immer die neusten Version des entsprechenden Programms. In meinem Fall beherbergte Ubuntu 16.04 in ihren Repos einen Link zur OpenVPN Version kleiner als 2.4.
+Im Testing lässt sich hierzu mehr finden...
+
 
 
 
