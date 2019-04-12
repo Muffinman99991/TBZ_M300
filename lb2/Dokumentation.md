@@ -204,44 +204,23 @@ Alles diese Infos lassen sich in meinem [client.ovpn](https://github.com/Muffinm
 &#160;
 
 ### Test 6
-**ID:** 6 &#160; &#160; &#160; &#160; &#160; **Beschreibung:** Erreibarkeit der Apachewebseite über öff. IP
+**ID:** 6 &#160; &#160; &#160; &#160; &#160; **Beschreibung:** Erreibarkeit der Apachewebseite über öffentl. IP
 
 **Soll-Zustand:** Vom Client aus bzw. durch den Tunnel Adapter sollte die Apache-Webseite nicht über die öffentliche IP des Hosts erreichbar sein (IP: 10.71.14.4)
 
-**Ist-Zustand:** Die Seite kann zwar aufgerufen werden, jedoch nur mit der IP des Docker0 Interfaces und nicht mit jener des Opaches-Net Interfaces:
+**Ist-Zustand:** Die Website ist über "https://10.71.14.4/" nicht erreichbar.
 
-<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/apache.https.PNG" alt="ID 5" width="510"/>
+**Erfüllt:** Ja
 
-**Erfüllt:** Nur Teilweise
+&#160;
 
+### Test 7
+**ID:** 7 &#160; &#160; &#160; &#160; &#160; **Beschreibung:** Kommunikation via opache-net
 
-Wird nun vom Host aus ein beliebiger Browser aufgerufen und https://10.8.0.1/ eingegeben, so erscheint die Standard Apache Webseite (das index.html File wird aufgerufen):
-<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/apache-site.PNG" alt="Apache Index.html" width="1000"/>
+**Soll-Zustand:** Vom Client aus bzw. durch den Tunnel Adapter sollte die Apache-Webseite nicht über die öffentliche IP des Hosts erreichbar sein (IP: 10.71.14.4)
 
-Der Apache Server hört zwar auf jede Ip-Adresse des Ports 80 & 443, jedoch sind diese Ports in der UFW geschlossen, da nur vom VPN aus auf die Webseiten zugegriffen werden können. Es ist nutzlos die öffentliche IP des Servers im Browser anzugeben.
+**Ist-Zustand:** Die Website ist über "https://10.71.14.4/" nicht erreichbar.
 
-<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/testfall.PNG" alt="index.html keinen Zugriff" width="750"/>
-
-
-Um zu überprüfen, ob vom VPN aus ins Internet zugegriffen werden kann, kann nach einer hergestellten Verbinung vom Client zum Server eine öffentliche IP (z.B. im CMD) angepingt werden. 
-Kann kein Ping auf das Lan odr das Web ausgeführt werden, so können folgenden Linien im Vagrant File hinzugefügt werden:
+**Erfüllt:** Ja
 
 
-``config.vm.provision "shell",``
-
-  ``run: "always",``
-  
-  ``inline: "route add default gw 192.168.33.1"``
-
- ``delete default gw on eth0``
- 
- ``config.vm.provision "shell",``
- 
-  ``run: "always",``
-  
- ``inline: "eval `route -n | awk '{ if ($8 ==\"eth0\" && $2 != \"0.0.0.0\") print \"route del default gw \" $2; }'`"``
-
-
-INFO1: 192.168.33.1 muss durch den gewünschten neuen Gateway ersetzt werden
-
-INFO2: eth0 muss 2x durch das  Interface ersetzt werden, von der die Default Route gelöscht werden möchte (könnte z.B auch "ens33" sein)
