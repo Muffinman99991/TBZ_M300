@@ -83,10 +83,14 @@ $ docker run -v $OVPN_DATA:/etc/openvpn --rm -it martin/openvpn easyrsa build-cl
 $ docker run -v $OVPN_DATA:/etc/openvpn --rm martin/openvpn getclient [CLIENTNAME] > [CLIENTNAME.ovpn]
 ```
 
-## Bash Skript erstellen (optional)
-In das Bash skript werden alle Befehle reingeschrieben, welche auf der VM ausgeführt werden. Wichtig dabei ist, dass jeder Befehl ohne Aufforderung einer Eingabe ausgeführt wird. Während Vagrant die VM bereitstellt, können keine Eingaben getätigt werden.
 
-Damit die VM weis, um welche Sprache es sich bei dem Skript handelt, muss in der ersten Linie des Skripts `#!/bin/bash` stehen. Gefolgt von `sudo su`, denn so muss nicht vor jedem Befehl manuell als SuperUser (`sudo`) ausgeführt werden.
+&#160;
+
+## Bash Skript erstellen (optional)
+Damit beide Container automatisiert erstellt und konfiguriert werden, entschied ich mich dafür ein [Skript](https://github.com/Muffinman99991/TBZ_M300/blob/master/lb2/create-containers.sh) zu verfassen.
+
+Diese erstellt separate Ordner (falls diese noch nicht vorhanden sind), kreiert ein gemeinsames Netz, über welches die Container intern kommunizieren sollte usw.
+
 
 &#160;
 
