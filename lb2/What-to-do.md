@@ -25,4 +25,5 @@ Am Schluss wenn man aufgefordert wird, das TBZ Interface einzugeben, gibt man di
 
 FERTIG !!!
 
-Die gleichen Schritte zählen beim Ausführen des "compose-create-containers.sh" Files auch jedoch müssen zuerst alle vorher erstellten Images, Container, Volumes und co. gelöscht werden
+
+Die gleichen Schritte zählen beim Ausführen des "compose-create-containers.sh" Files auch jedoch müssen zuerst alle vorher erstellten Images, Container, Volumes Networks und co. gelöscht werden!
