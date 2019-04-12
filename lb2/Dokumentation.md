@@ -40,9 +40,9 @@ So werden alle Befehle direkt im gleichen Container/Image erstellt.
 Zusätzlich kann noch der Befehl ``EXPOSE`` verwendet werden, welcher einen spezifischen Port nach aussen freigibt.
 
 
-## Container erstellen
+## Container und Netzwerk erstellen
 
-### Apache
+### Apache Container
 Da ich aus dem Ubuntu Image ein Apache Image kreieren möchte, habe ich zuerst den Befehl ``docker build -t apache-ssl .`` verwendet.
 Mit "-t" kann ein Imagename ausgewählt werden und der Punkt am Ende zeigt den Pfad an, in welchem sich das Dockerfile befindet
 (Punkt = auktuelles Verzeichnis). Sobald dieses erstellt wird, wird alles was im Container geschieht als STDOUT ausgegeben.
@@ -70,7 +70,7 @@ service apache2 restart
 
 Entweder kann hierzu im Docker File mit dem Befehl ``CMD`` oder ``ENTRYPOINT`` ein sogenannter "Startbefehl" mitgegeben werden, oder wie in meinem Fall ein Skript aufgerufen werden.
 
-### OpenVPN
+### OpenVPN Container
 Leider gelang es mir nciht aus diesem Image ein zweites Images zu erstellen, denn das Erstellen dieses Containers erfordert zahlreiche Eingaben. Jeder Server besitzt ein andere Key bzw. eine andere CA, weswegen es auch keinen Sinn ergiebt hier ein verallgemeinertes Image zu erstellen. Damit der Container voll funktionstüchtig erstellt wird, müssen folgenden Befehle eingegeben werden:
 
 ```
@@ -83,6 +83,10 @@ $ docker run -v $OVPN_DATA:/etc/openvpn --rm -it martin/openvpn easyrsa build-cl
 $ docker run -v $OVPN_DATA:/etc/openvpn --rm martin/openvpn getclient [CLIENTNAME] > [CLIENTNAME.ovpn]
 ```
 
+### Opache-Net Netzwerk
+Damit die beiden Container über ein internes Netzwerk (in Netzwerkplan "opache-net") kommunizieren können, muss dieses zurest erstellt werden: ``docker network create opache-net``
+
+Nachdem die beiden Container mit "docker up" gestartet wurden, müssen folgenden Befehle eingegeben werden: ``docker network connect opache-net running-openvpn`` & ``docker network connect opache-net running-apache-ssl``
 
 &#160;
 
@@ -94,43 +98,13 @@ Diese erstellt separate Ordner (falls diese noch nicht vorhanden sind), kreiert 
 
 &#160;
 
-## VM erstellen
-Die virtuelle Maschiene wird dem Befehl ``vagrant up`` erstellt. Hier zu ist es wichtig, dass das Vagrant File im betreffenden Ordner vorhanden ist, und zugleich keine Fehler aufweist. Um das Vagrant File nach Fehler zu überprüfen, kann der Befehl ``vagrant validate`` angewendet werden.
-
-<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/validate.PNG" alt="Validate" width="360"/>
-&#160;
-
-Bei einem Fehler wird die entsprechende Linie sowie der Fehler angezeigt.
-<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/validate_error.PNG" alt="Validate Error" width="460"/>
-&#160;
-
-Nachdem die VM erfolgreich erstellt wurde, gelangt man zurück zu seiner Kommandozeile. Mit dem Befehl ``vagrant status`` lässt sich zusätzlich anzeigen, in welchem Zustand sich die VM befindet bzw. ob diese überhaupt erstellt wurde.
-
-Nun lässt sich per ``vagrant ssh`` eine SSH Session zur VM öffnen.
-
-&#160;
-
 ## OpenVPN Client installieren
-Sobald der [OpenVPN Client](https://openvpn.net/community-downloads/) installiert wurde, kann das Config File in den Ordner ``C:\Program Files\OpenVPN\config`` kopiert werden. In diesem Ordner müssen sich ausserdem alle zum Aufbau des VPN-Tunnels notwendigen Zertifikate und Schlüssel befinden.
+Sobald der [OpenVPN Client](https://openvpn.net/community-downloads/) installiert wurde, kann das Config File in den Ordner ``C:\Program Files\OpenVPN\config`` kopiert werden. In diesem Ordner müssen sich diesesmal keine Zertifikate und Schlüssel befinden, da diese alle in Textform im client.ovpn stehen.
 
-Das Config File lässt sich von meinem Repo [hier](https://github.com/Muffinman99991/TBZ_M300/blob/master/files/client.ovpn) downloaden. 
-Wichtig ist dabei nur, dass die IP Adresse des Servers (auf der ersten Linie) angepasst wird. Der Rest stimmt, voraussichtlich dass bootstrap.sh und Get-Certs.bat File, wurden für die Konfiguration des Servers benutzt.
+Ausserdem muss das Config File dieses mal nicht angepasst werden, da diese schon im Bash Skript mit dem ``sed`` Befehl vorgenommen wird.
 
-&#160;
-
-## Zertifikate vom Server herunterladen
-Das Batch-File lässt sich [hier](https://github.com/Muffinman99991/TBZ_M300/blob/master/files/Get-Certs.bat) downloaden. 
-Damit dieses erfolgreich ausgeführt wird, ist pscp.exe zwingend notwendig. Pscp wird mit der Standardinstallation von Putty mitinstalliert. 
-
-Auch in diesem File gilt es, die bei jeder Linie die IP-Adresse des Servers, sowie das root Passwort des Servers anzugeben:
-``pscp.exe -pw <PASSWORT> root@<SERVER-IP>:/etc/openvpn/client/client.key "C:\Program Files\OpenVPN\config"``
-
-Möchte das Passwort nicht in plaintext angegebn werden, so kann der Parameter ``-pw`` weggelassen werden und man wird beim Ausühren vier Mal nach dem Root Passwort aufgefordert.
-
-Bei erfolgreichem Ausführen der Datei, erscheint folgende Ausgabe:
-<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/get-certs.PNG" alt="BashFile Ausgabe" width="720"/>
-
-**Wichtig:** Das Batch File muss als Administrator ausgeführt werden
+Leider muss das Client File auf irgendeine Art vom Ubuntu Host auf den entsprechenden Client gelangen. Da ich auf dem Ubuntu Host kein OpenSSH installiert habe, können die Zerfifikate so nichtt einfachso übertragen werden (wie bei LB1).
+Dies könnte jedoch noch einfach erweitert werden.
 
 &#160;
 
@@ -165,6 +139,28 @@ Damit der Kanal, über den die Zertifikate ausgetauscht werden, zusätzlich gesi
 Alles diese Infos lassen sich in meinem [client.ovpn](https://github.com/Muffinman99991/TBZ_M300/blob/master/files/client.ovpn) File finden.
 
 ## Testing / Troubleshooting
+### Testing
+#### Test 1
+**ID:** 1 &#160; &#160; &#160; &#160; &#160; **Beschreibung:** Container im Opache-net
+
+**Soll-Zustand:** Beide Container befinden sich im selber erstellten Opache-net
+
+**Soll-Zustand:** Anhand folgendem Befehl wurde ersichtlich, dass sich beide Container im selber erstellten Opache-net befinden:
+
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/opache-test.PNG" alt="ID 1" width="710"/>
+
+**Erfüllt:** Ja
+
+#### Test 2
+**ID:** 2 &#160; &#160; &#160; &#160; &#160; **Beschreibung:** Aktive Container
+
+**Soll-Zustand:** Beide Container wurden erstellt und sind aktiv
+
+**Soll-Zustand:** Anhand  folgendem Befehl wurde ersichtlich, dass sich beide Container erstellt wurden und aktiv sind:
+
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/docker-ps.PNG" alt="ID 2" width="710"/>
+
+
 Wird nun vom Host aus ein beliebiger Browser aufgerufen und https://10.8.0.1/ eingegeben, so erscheint die Standard Apache Webseite (das index.html File wird aufgerufen):
 <img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/apache-site.PNG" alt="Apache Index.html" width="1000"/>
 
