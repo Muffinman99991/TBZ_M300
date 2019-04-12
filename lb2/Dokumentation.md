@@ -139,26 +139,80 @@ Damit der Kanal, über den die Zertifikate ausgetauscht werden, zusätzlich gesi
 Alles diese Infos lassen sich in meinem [client.ovpn](https://github.com/Muffinman99991/TBZ_M300/blob/master/files/client.ovpn) File finden.
 
 ## Testing / Troubleshooting
-### Testing
-#### Test 1
+### Test 1
 **ID:** 1 &#160; &#160; &#160; &#160; &#160; **Beschreibung:** Container im Opache-net
 
 **Soll-Zustand:** Beide Container befinden sich im selber erstellten Opache-net
 
-**Soll-Zustand:** Anhand folgendem Befehl wurde ersichtlich, dass sich beide Container im selber erstellten Opache-net befinden:
+**Ist-Zustand:** Anhand folgendem Befehl wurde ersichtlich, dass sich beide Container im selber erstellten Opache-net befinden:
 
 <img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/opache-test.PNG" alt="ID 1" width="710"/>
 
 **Erfüllt:** Ja
 
-#### Test 2
+&#160;
+
+### Test 2
 **ID:** 2 &#160; &#160; &#160; &#160; &#160; **Beschreibung:** Aktive Container
 
 **Soll-Zustand:** Beide Container wurden erstellt und sind aktiv
 
-**Soll-Zustand:** Anhand  folgendem Befehl wurde ersichtlich, dass sich beide Container erstellt wurden und aktiv sind:
+**Ist-Zustand:** Anhand folgendem Befehl wurde ersichtlich, dass sich beide Container erstellt wurden und aktiv sind:
 
-<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/docker-ps.PNG" alt="ID 2" width="710"/>
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/docker-ps.PNG" alt="ID 2" width="910"/>
+
+**Erfüllt:** Ja
+
+
+&#160;
+
+### Test 3
+**ID:** 3 &#160; &#160; &#160; &#160; &#160; **Beschreibung:** VPN-Verbindung
+
+**Soll-Zustand:** Vom Client aus kann erfolgreich eine Verbindung ins VPN aufgebaut werden.
+
+**Ist-Zustand:** Anhand dem OpenVPN-Status und dem grünen Icon ist ersichtlich, dass der test erfolgreich war:
+
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/openvpn-test.PNG" alt="ID 3" width="510"/>
+
+**Erfüllt:** Ja
+
+&#160;
+
+### Test 4
+**ID:** 4 &#160; &#160; &#160; &#160; &#160; **Beschreibung:** Verbindung ins Internet
+
+**Soll-Zustand:** Vom Client aus bzw. durch den Tunnel Adapter kann erfolgreich aufs Internet zugegriffen werden.
+
+**Ist-Zustand:** Jede Seite ist im Internet aufrufbar (ein beweis Bild notwendig):
+
+**Erfüllt:** Ja
+
+&#160;
+
+### Test 5
+**ID:** 5 &#160; &#160; &#160; &#160; &#160; **Beschreibung:** Erreibarkeit der Apachewebseite
+
+**Soll-Zustand:** Vom Client aus bzw. durch den Tunnel Adapter kann die Apache Webseite per https aufgerufen werden.
+
+**Ist-Zustand:** Die Seite kann zwar aufgerufen werden, jedoch nur mit der IP des Docker0 Interfaces und nicht mit jener des Opaches-Net Interfaces:
+
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/apache.https.PNG" alt="ID 5" width="510"/>
+
+**Erfüllt:** Nur Teilweise
+
+&#160;
+
+### Test 6
+**ID:** 6 &#160; &#160; &#160; &#160; &#160; **Beschreibung:** Erreibarkeit der Apachewebseite über öff. IP
+
+**Soll-Zustand:** Vom Client aus bzw. durch den Tunnel Adapter sollte die Apache-Webseite nicht über die öffentliche IP des Hosts erreichbar sein (IP: 10.71.14.4)
+
+**Ist-Zustand:** Die Seite kann zwar aufgerufen werden, jedoch nur mit der IP des Docker0 Interfaces und nicht mit jener des Opaches-Net Interfaces:
+
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/apache.https.PNG" alt="ID 5" width="510"/>
+
+**Erfüllt:** Nur Teilweise
 
 
 Wird nun vom Host aus ein beliebiger Browser aufgerufen und https://10.8.0.1/ eingegeben, so erscheint die Standard Apache Webseite (das index.html File wird aufgerufen):
