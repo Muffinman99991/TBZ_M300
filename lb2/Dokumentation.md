@@ -50,10 +50,10 @@ Mit "-t" kann ein Imagename ausgewählt werden und der Punkt am Ende zeigt den P
 Nach kurzer Überprüfung ist erscihtlich, dass das Image erstellt wurde: 
 <img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/docker_images.PNG" alt="Netzwerkplan mit VPN-Tunnel" width="700"/>
 
-Nun kann der Container mit dem neu erstellten Image gestartet werden. Dabei sollte der entsprechende Port freigegeben werden:
+Nun kann der Container mit dem neu erstellten Image gestartet werden. Dabei kann noch der entsprechende Port freigegeben werden (was jedoch nicht nötig:
 
 ```
-docker run -dit --name running-apache-ssl -p 443:443/tcp apache-ssl
+docker run -dit --name running-apache-ssl apache-ssl
 ```
 
 Auch wenn vorher im Dockerfile der Befehl ``service apache2 start`` (startet den Apache) geschrieben wurde, muss dieser Befehl nun auf 
@@ -197,7 +197,7 @@ Alles diese Infos lassen sich in meinem [client.ovpn](https://github.com/Muffinm
 
 **Ist-Zustand:** Die Seite kann zwar aufgerufen werden, jedoch nur mit der IP des Docker0 Interfaces und nicht mit jener des Opaches-Net Interfaces:
 
-<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/apache.https.PNG" alt="ID 5" width="510"/>
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/apache-https.PNG" alt="ID 5" width="590"/>
 
 **Erfüllt:** Nur Teilweise
 
@@ -217,10 +217,24 @@ Alles diese Infos lassen sich in meinem [client.ovpn](https://github.com/Muffinm
 ### Test 7
 **ID:** 7 &#160; &#160; &#160; &#160; &#160; **Beschreibung:** Kommunikation via opache-net
 
-**Soll-Zustand:** Vom Client aus bzw. durch den Tunnel Adapter sollte die Apache-Webseite nicht über die öffentliche IP des Hosts erreichbar sein (IP: 10.71.14.4)
+**Soll-Zustand:** Die beiden Container können über das opache-net Netzwerk kommunizieren. Der Ping vom Apache Container sollte auf den OpenVPN Container funktionieren. Umgekehrt wird der Ping nicht möglich sein, da der OpenVPN Container zu wenig Ressourcen besitzt, um Programme herunterzuladen (apt ist nicht vorhanden, womit das Package "iputils-ping" nicht heruntergeladen werden kann).
 
-**Ist-Zustand:** Die Website ist über "https://10.71.14.4/" nicht erreichbar.
+**Ist-Zustand:** Ping war erfolgreich. Komischwerweise kann trotzdem nicht mit der Opache-net IP auf den Webserver zugegriffen werden.
+
+*Hinweis zum Bild: mit dem Befehl ``docker exec -it [Containername] /bin/bash`` konnte ich eine Bash des Containers öffnen. In dieser pingte ich dann die opache-net Ip-Adresse des OpenVPN Containers an:*
+
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/ping.PNG" alt="ID 7" width="450"/>
 
 **Erfüllt:** Ja
 
+
+## Troubleshooting
+
+Der einzige Weg wie das Aufrufen der Website möglich ist, ist wenn der Apache Container auch per Bridge-Network mit dem Host verbunden wird:
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/Ist_Netzwerklan.PNG" alt="ID 5" width="700"/>
+
+
+Dies ist jedoch nicht der richtige Weg, da so die beiden Container **nicht über das opache-net kommunizieren, sondern über den Host bzw. über das docker0 Netz**.
+
+Warum dies noch
 
