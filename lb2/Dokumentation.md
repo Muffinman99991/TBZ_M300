@@ -41,11 +41,13 @@ Zusätzlich kann noch der Befehl ``EXPOSE`` verwendet werden, welcher einen spez
 
 
 ## Container erstellen
+
+### Apache
 Da ich aus dem Ubuntu Image ein Apache Image kreieren möchte, habe ich zuerst den Befehl ``docker build -t apache-ssl .`` verwendet.
 Mit "-t" kann ein Imagename ausgewählt werden und der Punkt am Ende zeigt den Pfad an, in welchem sich das Dockerfile befindet
 (Punkt = auktuelles Verzeichnis). Sobald dieses erstellt wird, wird alles was im Container geschieht als STDOUT ausgegeben.
 
-Nach kurzer Überprüfunf ist erscihtlich, dass das Image erstellt wurde: 
+Nach kurzer Überprüfung ist erscihtlich, dass das Image erstellt wurde: 
 <img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/docker_images.PNG" alt="Netzwerkplan mit VPN-Tunnel" width="700"/>
 
 Nun kann der Container mit dem neu erstellten Image gestartet werden. Dabei sollte der entsprechende Port freigegeben werden:
@@ -55,14 +57,33 @@ docker run -dit --name running-apache-ssl -p 443:443/tcp apache-ssl
 ```
 
 Auch wenn vorher im Dockerfile der Befehl ``service apache2 start`` (startet den Apache) geschrieben wurde, muss dieser Befehl nun auf 
-irgeneine Art im laufenden Container neu ausgeführt werden, denn der vorherige Container (welchem zu einem Image wurde) wurde ja in diesem
-Sinne zerstört. Ich löste dies so, dass ich im Dockerfile mit einem Befehl ein Skript innerhalb des Containers erstellte, welches ich dann
+irgedneine Art im laufenden Container neu ausgeführt werden, denn der vorherige Container (welchem zu einem Image wurde) wurde ja in diesem Sinne zerstört. Docker Images können keine laufendne Prozesse speichern. Ich löste dies so, dass ich im Dockerfile mit einem Befehl ein Skript innerhalb des Containers erstellte, welches ich dann
 anschliessend nur noch ausführen kann.
 ```
 docker exec -it running-apache-ssl /etc/apache2/startapache.sh
 ```
+Das Skript besteht nur auf folgenden zwei Zeilen:
+```
+#!/bin/bash
+service apache2 restart
+```
 
-## Bash Skript erstellen
+Entweder kann hierzu im Docker File mit dem Befehl ``CMD`` oder ``ENTRYPOINT`` ein sogenannter "Startbefehl" mitgegeben werden, oder wie in meinem Fall ein Skript aufgerufen werden.
+
+### OpenVPN
+Leider gelang es mir nciht aus diesem Image ein zweites Images zu erstellen, denn das Erstellen dieses Containers erfordert zahlreiche Eingaben. Jeder Server besitzt ein andere Key bzw. eine andere CA, weswegen es auch keinen Sinn ergiebt hier ein verallgemeinertes Image zu erstellen. Damit der Container voll funktionstüchtig erstellt wird, müssen folgenden Befehle eingegeben werden:
+
+```
+$ export OVPN_DATA=openvpn_data
+$ docker volume create --name $OVPN_DATA
+$ docker run -v $OVPN_DATA:/etc/openvpn --rm martin/openvpn initopenvpn -u udp://[IP-Adresse vom Container]
+$ docker run -v $OVPN_DATA:/etc/openvpn --rm -it martin/openvpn initpki
+$ docker run --name openvpn -v $OVPN_DATA:/etc/openvpn -v /etc/localtime:/etc/localtime:ro -d -p 1194:1194/udp --cap-add=NET_ADMIN martin/openvpn
+$ docker run -v $OVPN_DATA:/etc/openvpn --rm -it martin/openvpn easyrsa build-client-full [CLIENTNAME]
+$ docker run -v $OVPN_DATA:/etc/openvpn --rm martin/openvpn getclient [CLIENTNAME] > [CLIENTNAME.ovpn]
+```
+
+## Bash Skript erstellen (optional)
 In das Bash skript werden alle Befehle reingeschrieben, welche auf der VM ausgeführt werden. Wichtig dabei ist, dass jeder Befehl ohne Aufforderung einer Eingabe ausgeführt wird. Während Vagrant die VM bereitstellt, können keine Eingaben getätigt werden.
 
 Damit die VM weis, um welche Sprache es sich bei dem Skript handelt, muss in der ersten Linie des Skripts `#!/bin/bash` stehen. Gefolgt von `sudo su`, denn so muss nicht vor jedem Befehl manuell als SuperUser (`sudo`) ausgeführt werden.
