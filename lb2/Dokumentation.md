@@ -118,25 +118,11 @@ Sobal die Verbindung aufgebaut wurde, erschient das Icon in der Taskleiste grün
 
 ## Sicherheit
 
-### Firewall (UFW)
-UFW steht für "Uncomplicated Firewall" und ist Heutzutage in vielen Linux / Unix Distros die vorinstallierte Firewall. 
-Die Firewall des Opache Servers lässt nur die Ports 22 und 1194 zu. Die Ports 80 und 443 sind geschlossen, da diese nur vom internen VPN aus erreicht werden können. Alle restlichen Ports werden von der Firewall blockiert. Ist ist also grundsätzlich sinnlos zu versuchen  mit einem anderen Port aud die FW zuzugreifen.
+Obwohl OpenVPN als relativ sicher gilt, ist dies stark von der Konfiguration von OpenVPN abhängig. Standardmässig benutzt OpenVPB "BL-CBC" als Verschlüsselungsalgorythmus. Da dieser als sehr veraltet gilt und zusätzlich schon geknackt wurde, empfielt es sich AES mit einer akzeptablen Bit Länge zu verwenden (256Bit oder mehr). Ich benutzte hierfür AES-256-CBC.
 
-<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/ufw.PNG" alt="ufw" width="390"/>
-
-### Lokale Berechtigungen
-Damit die Verwaltung auf dem Opache Server einfacher und zugleich sicherer wird, wurde ein zusätzlicher benutzer erstellt. Nur dieser (und der Root) darf sicherheitsrelevante Daten wie die Schlüssel und co. anschauen und bearbeiten. Ebenfalls ist er der einzige User, welcher Apache SSL Certs erstellen und verwalten darf.
-
-Hier lässts sich anmerken, dass alle Zertifikate in der Regel auf einem dazu dedizierten Server verwaltet werden. Dieser Server sollte strengstens beobachtet werden und die Zertifikate und notwendigen Schlüssel sollten nur über einen sicheren ssh Tunnel an die Server geschickt werden (z.B, per SCP)
-
-### OpenVPN (Verschlüsselungen etc.) 
-Obwohl OpenVPN als relativ sicher gilt, ist dies stark von der Konfiguration von OpenVPN abhängig. Standardmässig benutzt OpenVPB "BL-CBC" als Verschlüsselungsalgorythmus. Da dieser als sehr veraltet gilt und zusätzlich schon geknackt wurde, empfielt es sich AES mit einer akzeptablen Bit Länge zu verwenden (256Bit oder mehr). Ich benutzte hierfür AES-256-GCM.
-
-Ebenso benutzt OpenVPN SHA1 als Hashwert. Auch bei diesem empfiehlt es sich die Bit lange um ein vielfaches zu erhöhen. Ich entschied ich mich hierfür für SHA512.
+Ebenso benutzt OpenVPN SHA1 als Hashwert. Auch bei diesem empfiehlt es sich die Bit lange um ein vielfaches zu erhöhen. Ich entschied ich mich hierfür für SHA256.
 
 Damit der Kanal, über den die Zertifikate ausgetauscht werden, zusätzlich gesichert wird, wird ein PSK (Pre-shared-key) TLS Key verwendet.
-
-Alles diese Infos lassen sich in meinem [client.ovpn](https://github.com/Muffinman99991/TBZ_M300/blob/master/files/client.ovpn) File finden.
 
 ## Testing / Troubleshooting
 ### Test 1
@@ -231,6 +217,7 @@ Alles diese Infos lassen sich in meinem [client.ovpn](https://github.com/Muffinm
 ## Troubleshooting
 
 Der einzige Weg wie das Aufrufen der Website möglich ist, ist wenn der Apache Container auch per Bridge-Network mit dem Host verbunden wird:
+
 <img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/Ist_Netzwerklan.PNG" alt="ID 5" width="700"/>
 
 
@@ -240,8 +227,10 @@ Warum dies noch nicht funktioniert, konnte aus meheren Gründen entstehen: Zum e
 
 Wie beim Testfall 7 ersichtlich, können die beiden Container über das opache-net kommunizieren. Dies lässt mich annehmen, dass es an einer Einstellung am VPN-Server liegt, welche praktisch "Client zu Client" Verbindungen nicht zulässt. Ausserdem könnte es auch sein, dass der Apache seine Portweiterleitung (443) an den OpenVPN Container weitergeben müsste. Somit würde man dann über die Openvpn opache-net IP-Adresse auf die Seite zugreifen.
 
-Ausserdem ist es noch relativ interessant, dass vom Client aus (während dem man sich im VPN befindet) die opache-net IP des OpenVPN Containers (172.18.0.3) angepingt werden kann . Jedoch jene des Apache Containers nicht (172.18.0.2)
+Ausserdem ist es noch relativ interessant, dass vom Client aus (während dem man sich im VPN befindet) die opache-net IP des OpenVPN Containers (172.18.0.3) angepingt werden kann . Jedoch jene des Apache Containers nicht (172.18.0.2)...
 
 <img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/ping-from-client.PNG" alt="ping form client" width="500"/>
+
+Somit lässt sich mit Sicherheit sagen, dass das Problem zwischen den beiden Containern liegt, und nicht beispielsweise am öffentlichen IP des Host oder an sonst einem Punkt zwischen OpenVPN Container und Client.
 
 
