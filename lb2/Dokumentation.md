@@ -236,5 +236,12 @@ Der einzige Weg wie das Aufrufen der Website möglich ist, ist wenn der Apache C
 
 Dies ist jedoch nicht der richtige Weg, da so die beiden Container **nicht über das opache-net kommunizieren, sondern über den Host bzw. über das docker0 Netz**.
 
-Warum dies noch
+Warum dies noch nicht funktioniert, konnte aus meheren Gründen entstehen: Zum einen kann es sein, dass 
+
+Wie beim Testfall 7 ersichtlich, können die beiden Container über das opache-net kommunizieren. Dies lässt mich annehmen, dass es an einer Einstellung am VPN-Server liegt, welche praktisch "Client zu Client" Verbindungen nicht zulässt. Ausserdem könnte es auch sein, dass der Apache seine Portweiterleitung (443) an den OpenVPN Container weitergeben müsste. Somit würde man dann über die Openvpn opache-net IP-Adresse auf die Seite zugreifen.
+
+Ausserdem ist es noch relativ interessant, dass vom Client aus (während dem man sich im VPN befindet) die opache-net IP des OpenVPN Containers (172.18.0.3) angepingt werden kann . Jedoch jene des Apache Containers nicht (172.18.0.2)
+
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/ping-from-client.PNG" alt="ping form client" width="500"/>
+
 
