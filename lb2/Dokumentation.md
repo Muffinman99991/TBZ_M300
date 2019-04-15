@@ -7,13 +7,13 @@ Auf den Apache Webserver kann nur dann zugegriffen werden, wenn man sich im VPN 
 
 Da ich das Ziel dieser LB nicht vollumfänglich erreicht, werden hier vorerst die Soll-Systemlandschaft gezeigt:
 
-<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/Soll_Netzwerkla.PNG" alt="Netzwerkplan" width="750"/>
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/Soll_Netzwerkplan.PNG" alt="Netzwerkplan" width="750"/>
 
 &#160;
 
 Damit nur innerhalb des Tunnels auf die Webseite zugegriffen werden kann, wird der Tunnel wird über folgende Interfaces aufgebaut:
 
-<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/Soll_Netzwerklan_VPN.PNG" alt="Netzwerkplan mit VPN-Tunnel" width="750"/>
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/Soll_Netzwerkplan-VPN.PNG" alt="Netzwerkplan mit VPN-Tunnel" width="750"/>
 
 &#160;
 
@@ -218,7 +218,7 @@ Damit der Kanal, über den die Zertifikate ausgetauscht werden, zusätzlich gesi
 
 Der einzige Weg wie das Aufrufen der Website möglich ist, ist wenn der Apache Container auch per Bridge-Network mit dem Host verbunden wird:
 
-<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/Ist_Netzwerklan.PNG" alt="ID 5" width="700"/>
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/Ist_Netzwerkplan.PNG" alt="Ist-Netzwerkplan" width="850"/>
 
 
 Dies ist jedoch nicht der richtige Weg, da so die beiden Container **nicht über das opache-net kommunizieren, sondern über den Host bzw. über das docker0 Netz**.
