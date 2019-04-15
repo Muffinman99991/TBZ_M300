@@ -7,7 +7,7 @@ Auf den Apache Webserver kann nur dann zugegriffen werden, wenn man sich im VPN 
 
 Da ich das Ziel dieser LB nicht vollumfänglich erreicht, werden hier vorerst die Soll-Systemlandschaft gezeigt:
 
-<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/Soll_Netzwerklan.PNG" alt="Netzwerkplan" width="750"/>
+<img src="https://github.com/Muffinman99991/TBZ_M300/blob/master/other/pics/Soll_Netzwerkla.PNG" alt="Netzwerkplan" width="750"/>
 
 &#160;
 
